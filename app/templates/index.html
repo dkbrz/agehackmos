@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} База фильмов {% endblock %}
+
+{% block content %}
+	<div class="tab">
+	  <button class="tablinks" onclick="openCity(event, 'Existing')">Существующий пользователь</button>
+	  <button class="tablinks" onclick="openCity(event, 'New')">Новый пользователь</button>
+	</div>
+
+	<!-- Tab content -->
+	<div id="Existing" class="tabcontent">
+		<h4>Анкета</h4>
+		<div>
+			<form action="/existing" target="_blank">
+				<label>ID пользователя</label>
+				<input type="text" id="user_id" name="user_id"  pattern="[0-9]+" title="ID пользователя ">
+				<input type="submit" value="Искать">
+			</form>
+		</div>
+	</div>
+
+	<div id="New" class="tabcontent">
+		<h4>Анкета</h4>
+	  	<div>
+			<form action="/new" target="_blank">
+				<label>Год рождения</label>
+				<input type="text" id="birthyear" name="birthyear"  pattern="19[0-9]{2}" title="Год рождения (например, 1950)">
+				<label>Почтовый индекс</label>
+				<input type="text" id="postalcode" name="postalcode" pattern="[0-9]{6}" title="Почтовый индекс (например, 101101)">
+				<input type="submit" value="Искать">
+			</form>
+		</div>
+	</div>
+{% endblock %}

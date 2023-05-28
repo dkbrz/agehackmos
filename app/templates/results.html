@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block title %} Результаты поиска {% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+            <h2>Рекомендации</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Для ума</h3>
+                    {% for item in data['mind'] %}
+                        {% if item['i'] < 11 %} 
+                            <div class="card-body bg-warning">
+                        {% else %}
+                            <div class="card-body">
+                        {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title"><b>{{ item['l3'] }}</b>
+                                    {% if item['o'] == 1 %} / <span class="text-danger"> ОНЛАЙН</span>{% endif %}
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['l1'] }} / {{ item['l2'] }} </h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">G-{{ item['id'] }}</h6>
+                                <hr>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}</h6>
+                                <div class="table-responsive">
+                                    <table class="table-sm">
+                                        <tr>
+                                            <td>ПН</td>
+                                            <td>ВТ</td>
+                                            <td>СР</td>
+                                            <td>ЧТ</td>
+                                            <td>ПТ</td>
+                                            <td>СБ</td>
+                                            <td>ВС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ item['t'][0] }}</td>
+                                            <td>{{ item['t'][1] }}</td>
+                                            <td>{{ item['t'][2] }}</td>
+                                            <td>{{ item['t'][3] }}</td>
+                                            <td>{{ item['t'][4] }}</td>
+                                            <td>{{ item['t'][5] }}</td>
+                                            <td>{{ item['t'][6] }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <a href="#" class="btn btn-danger">Записаться</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4">
+                    <h4>Для тела</h3>
+                    {% for item in data['body'] %}
+                        {% if item['i'] < 11 %} 
+                                <div class="card-body bg-warning">
+                        {% else %}
+                            <div class="card-body">
+                        {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title"><b>{{ item['l3'] }}</b>
+                                    {% if item['o'] == 1 %} / <span class="text-danger"> ОНЛАЙН</span>{% endif %}
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['l1'] }} / {{ item['l2'] }} </h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">G-{{ item['id'] }}</h6>
+                                <hr>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}</h6>
+                                <div class="table-responsive">
+                                    <table class="table-sm">
+                                        <tr>
+                                            <td>ПН</td>
+                                            <td>ВТ</td>
+                                            <td>СР</td>
+                                            <td>ЧТ</td>
+                                            <td>ПТ</td>
+                                            <td>СБ</td>
+                                            <td>ВС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ item['t'][0] }}</td>
+                                            <td>{{ item['t'][1] }}</td>
+                                            <td>{{ item['t'][2] }}</td>
+                                            <td>{{ item['t'][3] }}</td>
+                                            <td>{{ item['t'][4] }}</td>
+                                            <td>{{ item['t'][5] }}</td>
+                                            <td>{{ item['t'][6] }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <a href="#" class="btn btn-danger">Записаться</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-4">
+                    <h4>Для души</h3>
+                    {% for item in data['soul'] %}
+                        <div class="card">
+                            {% if item['i'] < 11 %} 
+                                <div class="card-body bg-warning">
+                            {% else %}
+                                <div class="card-body">
+                            {% endif %}
+                                <h5 class="card-title"><b>{{ item['l3'] }}</b>
+                                    {% if item['o'] == 1 %} / <span class="text-danger"> ОНЛАЙН</span>{% endif %}
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['l1'] }} / {{ item['l2'] }} </h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">G-{{ item['id'] }}</h6>
+                                <hr>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}</h6>
+                                <div class="table-responsive">
+                                    <table class="table-sm">
+                                        <tr>
+                                            <td>ПН</td>
+                                            <td>ВТ</td>
+                                            <td>СР</td>
+                                            <td>ЧТ</td>
+                                            <td>ПТ</td>
+                                            <td>СБ</td>
+                                            <td>ВС</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ item['t'][0] }}</td>
+                                            <td>{{ item['t'][1] }}</td>
+                                            <td>{{ item['t'][2] }}</td>
+                                            <td>{{ item['t'][3] }}</td>
+                                            <td>{{ item['t'][4] }}</td>
+                                            <td>{{ item['t'][5] }}</td>
+                                            <td>{{ item['t'][6] }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <a href="#" class="btn btn-danger">Записаться</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h2> История </h2>
+            {% for item in history %}
+                <div class="card text-secondary">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item['l3'] }}</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['l1'] }} / {{ item['l2'] }} </h6>
+                            <hr>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['start'] }} - {{ item['finish'] }}</h6>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['n'] }} раз(а)</h6>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock %}
