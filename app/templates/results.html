@@ -5,7 +5,8 @@
 {% block content %}
     <div class="row">
         <div class="col-md-9">
-            <h2>Рекомендации</h2>
+            <h2>Рекомендации. {% if user[1] == 1 %} Женщина {% else %} Мужчина {% endif %}, 
+                ~ {{user[0]}} лет</h2>
             <div class="row">
                 <div class="col-md-4">
                     <h4>Для ума</h3>

@@ -45,6 +45,7 @@ LEFT JOIN (
 	SELECT 
 		base.category3_id as category_out
 		, round(-0.94628879 - 0.07349178714361423 * coalesce(category_rank, 50) - 0.09995501644536509 * coalesce(rank_age, 50) + 1.0775831177458692 * coalesce(same, 0), 4) as total_rank
+		-- , round(-1 * coalesce(category_rank, 50) - 0.1 * coalesce(rank_age, 50) + 100 * coalesce(same, 0), 4) as total_rank
 		, coalesce(will_continue, 0) as already_ok
 	FROM (
 		SELECT category3_id
@@ -140,4 +141,66 @@ GROUP BY category1_name
 	, category2_name
 	, category3_name
 ORDER BY start_date DESC, finish_date DESC
+"""
+
+
+QUESTIONNAIRE_GROUPS = """
+SELECT 
+	group_suggest.group_id 
+	, is_online 
+	, category3_id
+	, same_district 
+	, same_zone
+	, same_post
+	, n_neighbors
+	, total_rank
+FROM (
+	SELECT 
+		groups.group_id
+		, max(is_online) as is_online
+		, min(category3_id) as category3_id
+		, max(ends_soon) as ends_soon
+		, coalesce(g_district, 0) = u_district AND u_district > 0 as same_district
+		, coalesce(g_zone, 0) = u_zone AND u_zone > 0 as same_zone
+		, coalesce(g_postal_code, 0) = u_postal AND u_postal > 0 as same_post
+		, coalesce(n_neighbors, 0) as n_neighbors
+	FROM groups 
+	LEFT JOIN group_locations ON groups.group_id = group_locations.group_id
+	LEFT JOIN (
+		SELECT code as u_postal, coalesce(zone_id, 0) as u_zone, coalesce(district_id, 0) as u_district
+		FROM postal_map
+		WHERE code = ?
+	) users ON 1=1
+	LEFT JOIN model_neighbors ON groups.group_id = model_neighbors.group_id AND users.u_postal = model_neighbors.postal_code 
+	WHERE is_available = 1
+	GROUP BY groups.group_id
+) as group_suggest
+LEFT JOIN (
+	SELECT 
+		base.category3_id as category_out
+		, - coalesce(rank_age, 50) as total_rank
+	FROM (
+		SELECT category3_id
+		FROM categories
+	) as base 
+	LEFT JOIN (
+		SELECT category_out, rank_age
+		FROM model_age
+		WHERE age_group = ? AND is_woman = ?
+		ORDER BY rank_age ASC
+	) rank_age ON base.category3_id = rank_age.category_out
+	INNER JOIN (
+		SELECT DISTINCT category3_id, 1 as is_available
+		FROM groups
+		WHERE is_available = 1
+	) group_availability ON base.category3_id = group_availability.category3_id
+	-- ORDER BY total_rank DESC
+) as category_suggest ON group_suggest.category3_id = category_suggest.category_out
+WHERE ends_soon = 0
+ORDER BY total_rank DESC, same_district DESC, (same_zone + (n_neighbors > 5)) DESC, same_post DESC, n_neighbors DESC, ends_soon ASC
+"""
+
+QUESTIONNAIRE_CAT = """
+SELECT category3_id, feature
+FROM questionnaire
 """

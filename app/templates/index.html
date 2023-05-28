@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} База фильмов {% endblock %}
+{% block title %} Московское долголетие {% endblock %}
 
 {% block content %}
 	<div class="tab">
@@ -24,10 +24,116 @@
 		<h4>Анкета</h4>
 	  	<div>
 			<form action="/new" target="_blank">
-				<label>Год рождения</label>
-				<input type="text" id="birthyear" name="birthyear"  pattern="19[0-9]{2}" title="Год рождения (например, 1950)">
-				<label>Почтовый индекс</label>
-				<input type="text" id="postalcode" name="postalcode" pattern="[0-9]{6}" title="Почтовый индекс (например, 101101)">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+						    <label for="birthyear">Год рождения</label>
+						    <input type="text" id="birthyear" name="birthyear"  pattern="19[0-9]{2}" title="Год рождения (например, 1950)" class="form-control" required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+						    <label for="postalcode">Почтовый индекс</label>
+							<input type="text" class="form-control" id="postalcode" name="postalcode" pattern="[0-9]{6}" title="Почтовый индекс (например, 101101)" required>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+						    <label for="gender">Я</label>
+							<select id="gender" name="gender" class="form-control" required>
+							  <option value="f" selected>Женщина</option>
+							  <option value="m">Мужчина</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<br><label>Для меня важно</label><br>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="health">
+							<label class="form-check-label" for="defaultCheck1">
+							Здоровье
+							</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="technology">
+							<label class="form-check-label" for="defaultCheck1">
+							Изучить технологии
+							</label>
+						</div>						
+					</div>
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="intellect">
+							<label class="form-check-label" for="defaultCheck1">
+							Интеллектуальные занятия
+							</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="art">
+							<label class="form-check-label" for="defaultCheck1">
+							Искусство
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="active">
+							<label class="form-check-label" for="defaultCheck1">
+							Активность
+							</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="sport">
+							<label class="form-check-label" for="defaultCheck1">
+							Спорт
+							</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="home">
+							<label class="form-check-label" for="defaultCheck1">
+							Домашние дела
+							</label>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="beauty">
+							<label class="form-check-label" for="defaultCheck1">
+							Красота и стиль
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="language">
+							<label class="form-check-label" for="defaultCheck1">
+							Языки
+							</label>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=1 name="history">
+							<label class="form-check-label" for="defaultCheck1">
+							История
+							</label>
+						</div>
+					</div>
+				</div>				
 				<input type="submit" value="Искать">
 			</form>
 		</div>
