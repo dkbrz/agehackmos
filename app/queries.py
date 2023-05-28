@@ -47,6 +47,7 @@ LEFT JOIN (
 		, round(-0.94628879 - 0.07349178714361423 * coalesce(category_rank, 50) - 0.09995501644536509 * coalesce(rank_age, 50) + 1.0775831177458692 * coalesce(same, 0), 4) as total_rank
 		-- , round(-1 * coalesce(category_rank, 50) - 0.1 * coalesce(rank_age, 50) + 100 * coalesce(same, 0), 4) as total_rank
 		, coalesce(will_continue, 0) as already_ok
+		, coalesce(enough, 0) as enough
 	FROM (
 		SELECT category3_id
 		FROM categories
@@ -65,6 +66,7 @@ LEFT JOIN (
 		LEFT JOIN (
 			SELECT category_in, category_out, rank_cat
 			FROM model_categories
+			WHERE rank_cat <= 6
 			UNION ALL 
 			SELECT category3_id, category3_id, 0
 			FROM categories
@@ -80,6 +82,7 @@ LEFT JOIN (
 			FROM users
 			WHERE user_id = ?
 		) users ON model_age.is_woman = users.is_woman AND model_age.age_group = users.age_group
+		WHERE rank_age <= 6
 		ORDER BY rank_age ASC
 	) rank_age ON base.category3_id = rank_age.category_out
 	INNER JOIN (
@@ -97,6 +100,13 @@ LEFT JOIN (
 		) groups ON attend_history.group_id = groups.group_id
 		WHERE user_id = ? AND finish_date > '2023-02-01'
 	) current_groups ON base.category3_id = current_groups.category3_id
+	LEFT JOIN (
+		SELECT category3_id, 1 as enough
+		FROM attend_history		
+		WHERE user_id = ?
+		GROUP BY category3_id
+		HAVING max(finish_date) < '2023-01-01' AND sum(n_visits) > 25
+	) enough_groups ON base.category3_id = enough_groups.category3_id
 	-- ORDER BY total_rank DESC
 ) as category_suggest ON group_suggest.category3_id = category_suggest.category_out
 LEFT JOIN (
@@ -107,7 +117,7 @@ LEFT JOIN (
 	JOIN groups ON attend_history.group_id = groups.group_id
 	WHERE attend_history.user_id = ?
 ) as user_pref
-WHERE already_ok = 0
+WHERE already_ok = 0 AND enough = 0
 ORDER BY total_rank DESC, already_ok, (offline_rank + online_rank) DESC, offline_rank DESC, same_district DESC, (same_zone + (n_neighbors > 5)) DESC, same_post DESC, n_neighbors DESC, ends_soon ASC
 """
 

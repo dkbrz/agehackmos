@@ -70,7 +70,7 @@ def existing():
 	user = query_db("SELECT age_group, is_woman FROM users WHERE user_id = ?", args=(user_id,), one=True)
 	result = query_db(
 		EXISTING_QUERY, 
-		args=(user_id, user_id, user_id, user_id, user_id,)
+		args=(user_id, user_id, user_id, user_id, user_id, user_id)
 	)
 	
 	groups = pd.DataFrame(result, columns=[
