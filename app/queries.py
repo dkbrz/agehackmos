@@ -198,6 +198,7 @@ FROM (
 		, coalesce(g_postal_code, 0) = u_postal AND u_postal > 0 as same_post
 		, coalesce(n_neighbors, 0) as n_neighbors
 	FROM groups 
+	INNER JOIN group_timetable ON groups.group_id = group_timetable.group_id
 	LEFT JOIN group_locations ON groups.group_id = group_locations.group_id
 	LEFT JOIN (
 		SELECT code as u_postal, coalesce(zone_id, 0) as u_zone, coalesce(district_id, 0) as u_district
