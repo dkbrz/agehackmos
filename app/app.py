@@ -50,7 +50,8 @@ def data_to_page(draft):
 					draft.loc[i]['saturday'] if draft.loc[i]['saturday'] > 0 else '',
 					draft.loc[i]['sunday'] if draft.loc[i]['sunday'] > 0 else ''
 				],
-				'i': draft.loc[i]['num']
+				'i': draft.loc[i]['num'],
+				'n': draft.loc[i]['same_post']
 			}
 			for i in draft[draft['category'] == name].head(10).index
 		]
@@ -102,16 +103,27 @@ def new():
 		age_group = max(min((2023 - int(request.values.get("birthyear", int))) // 10 * 10, 90), 50)
 		gender = 1 if request.values.get("gender") == 'f' else 0
 		ok_cats = {i[0] for i in request.values.items() if i[1] == '1'}
+		online = 1 if request.values.get("online") == '1' else 0
+		offline = 1 if request.values.get("offline") == '1' else 0
+		near = 1 if request.values.get("near") == '1' else 0
 	
 	result = query_db(
 		QUESTIONNAIRE_GROUPS, 
-		args=(postalcode, age_group, gender,)
+		args=(postalcode, age_group, gender)
 	)
 
 	groups = pd.DataFrame(result, columns=[
 		'group_id', 'is_online', 'category_id', 'same_district', 'same_zone',
 		'same_post', 'n_neighbors', 'total_rank'
 	])
+
+	if online == 1:
+		groups = groups[groups['is_online'] == 1]
+	if offline == 1:
+		groups = groups[groups['is_online'] == 0]
+	if near == 1:
+		groups = groups[groups['same_zone'] == 1]
+
 	groups = groups.drop_duplicates(subset=['category_id'], keep='first')
 	groups['num'] = range(1, groups.shape[0] + 1)
 

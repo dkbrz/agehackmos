@@ -23,7 +23,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['l1'] }} / {{ item['l2'] }} </h6>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">G-{{ item['id'] }}</h6>
                                 <hr>
-                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}</h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}{% if item['n'] == 1 %} (<span class="text-danger">рядом с вами</span>) {% endif %}</h6>
                                 <div class="table-responsive">
                                     <table class="table-sm">
                                         <tr>
@@ -66,7 +66,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['l1'] }} / {{ item['l2'] }} </h6>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">G-{{ item['id'] }}</h6>
                                 <hr>
-                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}</h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}{% if item['n'] == 1 %} (<span class="text-danger">рядом с вами</span>) {% endif %}</h6>
                                 <div class="table-responsive">
                                     <table class="table-sm">
                                         <tr>
@@ -109,7 +109,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['l1'] }} / {{ item['l2'] }} </h6>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">G-{{ item['id'] }}</h6>
                                 <hr>
-                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }}</h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{ item['a'] }} {% if item['n'] == 1 %} (<span class="text-danger">рядом с вами</span>) {% endif %}</h6>
                                 <div class="table-responsive">
                                     <table class="table-sm">
                                         <tr>
